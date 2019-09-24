@@ -5,6 +5,13 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "Image rotation (opencv)",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceRoot}/image_rotation_opencv.py",
+            "args": ["dog_and_cat_small.jpg","30"]
+        },
+        {
             "name": "Image rotation",
             "type": "python",
             "request": "launch",
