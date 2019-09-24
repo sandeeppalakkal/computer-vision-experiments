@@ -42,22 +42,23 @@ def _rotate(img,angle):
     img_rot = np.zeros((h_,w_),dtype=np.uint8)
 
     # Naive loops, slow for large images
-    for x in range(w_):
-        for y in range(h_):
-            x_,y_ = rotated_value(x-w_/2.,y-h_/2.,theta)
-            x_ += w/2.
-            y_ += h/2.
-            xl = np.floor(x_).astype(int)
-            xu = np.floor(x_+1).astype(int)
-            yl = np.floor(y_).astype(int)
-            yu = np.floor(y_+1).astype(int)
+    for x_ in range(w_):
+        for y_ in range(h_):
+            # Reverse rotation
+            x,y = rotated_value(x_-w_/2.,y_-h_/2.,theta)
+            x += w/2.
+            y += h/2.
+            xl = np.floor(x).astype(int)
+            xu = np.floor(x+1).astype(int)
+            yl = np.floor(y).astype(int)
+            yu = np.floor(y+1).astype(int)
             if not (bounded(xl,0,w) and bounded(xu,0,w) and bounded(yl,0,h) and bounded(yu,0,h)):
                 continue
             # Bilinear interpolation
-            imgl = float(xu - x_) * img[yl,xl] + float(x_ - xl) * img[yl,xu]
-            imgu = float(xu - x_) * img[yu,xl] + float(x_ - xl) * img[yu,xu]
-            imgc = float(yu - y_) * imgl + float(y_ - yl) * imgu
-            img_rot[y,x] = imgc.astype(np.uint8)
+            imgl = float(xu - x) * img[yl,xl] + float(x - xl) * img[yl,xu]
+            imgu = float(xu - x) * img[yu,xl] + float(x - xl) * img[yu,xu]
+            imgc = float(yu - y) * imgl + float(y - yl) * imgu
+            img_rot[y_,x_] = imgc.astype(np.uint8)
 
     return img_rot
 
